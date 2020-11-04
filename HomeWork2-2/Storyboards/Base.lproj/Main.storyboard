@@ -22,7 +22,7 @@
                         <barButtonItem key="rightBarButtonItem" image="square.and.arrow.up" catalog="system" id="0hO-cL-cI3">
                             <connections>
                                 <action selector="pressedEditColor:" destination="vyD-LF-lGX" id="1vE-8u-lfG"/>
-                                <segue destination="BYZ-38-t0r" kind="presentation" identifier="colorEditorController" modalPresentationStyle="fullScreen" id="btp-vs-d7e"/>
+                                <segue destination="BYZ-38-t0r" kind="presentation" identifier="" modalPresentationStyle="fullScreen" id="btp-vs-d7e"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

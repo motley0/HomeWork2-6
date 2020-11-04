@@ -23,7 +23,9 @@ class ColorEditorViewController: UIViewController {
         super.viewDidLoad()
         setupDefaultValuesForView()
         setupDefaultValuesForSliders()
-        setupColorValues()
+        setupSliders()
+        setupColorValueLabels()
+        setupTextFields()
         setupToolBar()
     }
     
@@ -102,17 +104,21 @@ extension ColorEditorViewController {
         blueSlider.minimumTrackTintColor = .blue
     }
     
-    private func setupColorValues() {
-        let rgb = viewColor.rgb
-        
-        redSlider.value = Float(rgb.red)
-        greenSlider.value = Float(rgb.green)
-        blueSlider.value = Float(rgb.blue)
-        
+    private func setupSliders() {
+        let ciColor = CIColor(color: viewColor)
+               
+        redSlider.value = Float(ciColor.red)
+        greenSlider.value = Float(ciColor.green)
+        blueSlider.value = Float(ciColor.blue)
+    }
+    
+    private func setupColorValueLabels() {
         redColorValueLabel.text = toString(number: redSlider.value)
         greenColorValueLabel.text = toString(number: greenSlider.value)
         blueColorValueLabel.text = toString(number: blueSlider.value)
-        
+    }
+    
+    private func setupTextFields() {
         redTextField.text = redColorValueLabel.text
         greenTextField.text = greenColorValueLabel.text
         blueTextField.text = blueColorValueLabel.text
@@ -132,17 +138,17 @@ extension ColorEditorViewController {
     
     private func createToolBar() -> UIToolbar {
         let toolBar = UIToolbar()
-        toolBar.barStyle = .default
-        toolBar.isTranslucent = true
-        toolBar.isUserInteractionEnabled = true
         toolBar.sizeToFit()
-    
         
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done,
                                          target: self,
                                          action: #selector(viewEndEditing))
-        
-        toolBar.setItems([doneButton], animated: false)
+        let flexibleSpaceButton = UIBarButtonItem(
+            barButtonSystemItem: .flexibleSpace,
+            target: nil,
+            action: nil
+        )
+        toolBar.setItems([flexibleSpaceButton, doneButton], animated: false)
         
         return toolBar
     }
@@ -188,15 +194,4 @@ extension ColorEditorViewController: UITextFieldDelegate {
         present(alert, animated: true)
     }
 
-}
-
-extension UIColor {
-    var rgb: (red: CGFloat, green: CGFloat, blue: CGFloat) {
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        getRed(&red, green: &green, blue: &blue, alpha: nil)
-
-        return (red, green, blue)
-    }
 }
